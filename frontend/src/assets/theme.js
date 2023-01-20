@@ -21,6 +21,40 @@ const theme = createTheme({
     custom: {
       main: "#fff",
       contrastText: "#000",
+    },
+  },
+
+  components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          color: "#fff",
+        },
+        input: {
+          color: "white",
+          "&::before": {
+            border: "1px solid rgba(0, 0, 0, 0.42)",
+          },
+        },
+      },
+    },
+    MuiButton: {
+      defaultProps: {
+        disableRipple: true,
+      },
+      styleOverrides: {
+        root: {
+          padding: "7.5px 50px",
+          fontSize: "1.2rem",
+          fontWeight: "bold",
+          textTransform: "none",
+          letterSpacing: "0.1rem",
+          borderRadius: "15px",
+          "&.active": {
+            background:'black',
+          },
+        }
+      }
     }
   },
 });
