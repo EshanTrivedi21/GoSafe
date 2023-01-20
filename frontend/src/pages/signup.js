@@ -134,7 +134,7 @@ const Signup = () => {
                   mt: 5,
                 }}
               > By registering you agree to our terms and conditions</Typography>
-              <div className="flex flex-col sm:flex-row justify-center items-center gap-5 mt-20">
+              <div className="flex flex-col sm:flex-row justify-center items-center mt-20">
               <Button
                 variant="contained"
                 sx={{
@@ -145,6 +145,17 @@ const Signup = () => {
               >
                 Sign Up
               </Button>
+              <Typography
+                variant="h6"
+                color="primary.contrastText"
+                sx={{
+                  fontStyle: "italic",
+                  fontSize: "0.65rem",
+                  textAlign: "center",
+                  textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
+                  mt: 1,
+                }}
+              > Already have an account Login</Typography>
               </div>
             </Box>
           </Grid>
