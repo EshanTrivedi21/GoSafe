@@ -43,7 +43,7 @@ export default function LabTabs() {
   };
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    padding: theme.spacing(5),
+    padding: theme.spacing(2),
     color: theme.palette.text.secondary,
   }));
 
@@ -82,7 +82,7 @@ export default function LabTabs() {
         .setLngLat([position.coords.longitude, position.coords.latitude])
         .addTo(map.current);
 
-      const numberOfMarkers = 200;
+      const numberOfMarkers = 250;
       for (let i = 0; i < numberOfMarkers; i++) {
         const randomCoordinates = getRandomCoordinates(
           [position.coords.longitude, position.coords.latitude],
@@ -115,6 +115,7 @@ export default function LabTabs() {
   const id = open ? 'simple-popover' : undefined;
 
   const StyledPopover = styled(Popover)({
+    backgroundColor: 'transparent',
     '& .MuiPopover-paper': {
       backgroundColor: '#13724A',
       padding: '10px',
@@ -127,7 +128,7 @@ export default function LabTabs() {
   });
 
   return (
-    <Box sx={{ width: "100%", typography: "body1" }} className="!bg-[#fff]">
+    <Box sx={{ width: "100%", typography: "body1", height: "100vh" }} className="!bg-[#fff]">
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider", zIndex: 15 }}>
           <TabList
@@ -145,6 +146,15 @@ export default function LabTabs() {
               },
             }}
           >
+            <Tab
+              label="BMC ADMIN PORTAL"
+              value="0"
+              sx={{
+                width: "400px",
+                marginLeft: "-150px",
+                fontSize: "20px",
+              }}
+            />
             <Tab
               label="Map Data"
               value="1"
@@ -181,7 +191,7 @@ export default function LabTabs() {
         >
           <div
             ref={mapContainer}
-            className="map-container w-[100vw] h-[100vh] inset-0 -z-5"
+            className="map-container w-[100vw] h-[90vh] inset-0 -z-5"
           />
           <StyledPopover
             id={id}
