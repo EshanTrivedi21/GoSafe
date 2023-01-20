@@ -30,11 +30,11 @@ export default function Camera() {
         audio={false}
         screenshotFormat="image/jpeg"
         videoConstraints={videoConstraints}
-        className="w-80 border-2 border-[#fff] border-b-0"
+        className="w-80 border-2 border-[#000] border-b-0"
       >
         {({ getScreenshot }) => (
           <button
-            className="bg-[#165C3F] w-80 h-20 border-2 border-[#fff]"
+            className="bg-[#165C3F] w-80 h-20 border-2 border-[#000]"
             onClick={() => {
               const imageSrc = getScreenshot();
               navigate("/add", { state: { img: imageSrc } });

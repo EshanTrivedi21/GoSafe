@@ -108,7 +108,7 @@ const Signup = () => {
                   />
                 </Grid>
                 <Grid item mobile={11} tablet={8.5} laptop={6}>
-                  <CssTextField
+                <CssTextField
                     id="outlined-basic"
                     label="Phone Number"
                     variant="outlined"
