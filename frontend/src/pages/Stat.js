@@ -12,7 +12,7 @@ const Stat = () => {
             height: "100px",
             width: "100px",
             borderRadius: "10px",
-            border: "5px solid hwb(141deg 19% 0% / 87%)",
+            // border: "5px solid hwb(141deg 19% 0% / 87%)",
           }}
         />
         <p className="text-white">RQI analysis :- </p>

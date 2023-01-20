@@ -10,6 +10,7 @@ import { styled } from "@mui/material/styles";
 import { apiCheckLogin } from "../utilities/apiCall";
 import { useNavigate } from "react-router-dom";
 import Stat from "./Stat";
+import Chart from "./Chart";
 
 export default function LabTabs() {
   let [a, setA] = React.useState(null);
@@ -36,13 +37,12 @@ export default function LabTabs() {
   };
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    padding: theme.spacing(1),
-    textAlign: "center",
+    padding: theme.spacing(5),
     color: theme.palette.text.secondary,
   }));
 
   return (
-    <Box sx={{ width: "100%", typography: "body1" }}>
+    <Box sx={{ width: "100%", typography: "body1" }} className='!overflow-scroll  !bg-[#03ff89]'>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList
@@ -80,7 +80,7 @@ export default function LabTabs() {
         </TabPanel>
         <TabPanel value="2">Item Two</TabPanel>
         <TabPanel value="3">Item Three</TabPanel>
-        <TabPanel value="4">Item Four</TabPanel>
+        <TabPanel value="4"><Chart/></TabPanel>
       </TabContext>
     </Box>
   );
