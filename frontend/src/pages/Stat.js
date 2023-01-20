@@ -7,7 +7,7 @@ const Stat = () => {
       <div className="flex justify-center items-start flex-col">
         <img
           src="https://picsum.photos/200/300"
-          alt="image"
+          alt=""
           style={{
             height: "100px",
             width: "100px",

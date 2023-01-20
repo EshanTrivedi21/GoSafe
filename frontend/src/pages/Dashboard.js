@@ -10,7 +10,6 @@ import { styled } from "@mui/material/styles";
 import { apiCheckLogin } from "../utilities/apiCall";
 import { useNavigate } from "react-router-dom";
 import Stat from "./Stat";
-import Chart from "./Chart";
 
 export default function LabTabs() {
   let [a, setA] = React.useState(null);
@@ -50,10 +49,9 @@ export default function LabTabs() {
             aria-label="lab API tabs example"
             centered
           >
-            <Tab label="Potholes" value="1" />
-            <Tab label="BMC-Dash log" value="2" />
-            <Tab label="History" value="3" />
-            <Tab label="Zonal View" value="4" />
+            <Tab  textColor="primary.main" label="Map Data" value="1" />
+            <Tab label="Incoming Reports" value="2" />
+            <Tab label="Resolved Reports" value="3" />
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -80,7 +78,6 @@ export default function LabTabs() {
         </TabPanel>
         <TabPanel value="2">Item Two</TabPanel>
         <TabPanel value="3">Item Three</TabPanel>
-        <TabPanel value="4"><Chart/></TabPanel>
       </TabContext>
     </Box>
   );
