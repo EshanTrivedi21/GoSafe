@@ -2,6 +2,7 @@ import { Button, TextField, Typography } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
 import { Link, useLocation } from "react-router-dom";
+import apiPost from "../utilities/apiCall";
 import { Theme } from "../assets/theme";
 
 const CssTextField = styled(TextField)({
@@ -42,6 +43,19 @@ const CssTextField = styled(TextField)({
 export default function Add() {
   const location = useLocation();
   let img = location.state || null;
+  let [Problem, setProblem] = React.useState("");
+  let [user, setUser] = React.useState(null);
+  function handleSubmit(e) {
+    e.preventDefault();
+    navigator.geolocation.getCurrentPosition((position) => {
+      let data = new FormData();
+      data.append("Image", Image);
+      data.append("Problem", Problem);
+      data.append("lat", position.coords.latitude);
+      data.append("lng", position.coords.longitude);
+      apiPost("add/pothole", data, setUser);
+    });
+  }
   return (
     <Theme>
       <svg

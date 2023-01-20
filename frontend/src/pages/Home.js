@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 import { Theme } from "../assets/theme.js";
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import { apiCheckLogin } from "../utilities/apiCall";
+import axios from "axios";
 
 const CssTextField = styled(TextField)({
   label: {
@@ -86,7 +87,6 @@ export default function Home() {
     if (!a) {
       apiCheckLogin(setA);
     }
-    
   }, []);
   React.useEffect(() => {
     if (a) {
@@ -95,6 +95,34 @@ export default function Home() {
       }
     }
   }, [a]);
+  function addRoute(coords) {
+    if (map.current.getSource("route")) {
+      map.current.removeLayer("route");
+      map.current.removeSource("route");
+    } else {
+      map.current.addLayer({
+        id: "route",
+        type: "line",
+        source: {
+          type: "geojson",
+          data: {
+            type: "Feature",
+            properties: {},
+            geometry: coords,
+          },
+        },
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "#03AA46",
+          "line-width": 8,
+          "line-opacity": 0.8,
+        },
+      });
+    }
+  }
   useEffect(() => {
     if (map.current) return;
     map.current = new mapboxgl.Map({
@@ -112,6 +140,32 @@ export default function Home() {
         .addTo(map.current);
     });
   }, []);
+  useEffect(() => {
+    if (!map.current) return;
+    map.current.on("load", () => {
+      axios
+        .get(
+          `https://api.mapbox.com/directions/v5/mapbox/driving/${72.884217},${19.150826};${72.829198},${19.106933}`,
+          {
+            params: {
+              access_token: mapboxgl.accessToken,
+              geometries: "geojson",
+              steps: true,
+              overview: "full",
+              alternatives: true,
+              exclude: "unpaved",
+            },
+            withCredentials: false,
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          const geojson = res.data.routes[0].geometry;
+          addRoute(geojson);
+        });
+    });
+  }, []);
+
   return (
     <Theme>
       <div className="h-[100vh] w-full flex flex-col justify-center items-center">
@@ -186,8 +240,8 @@ export default function Home() {
         </div>
         <div ref={mapContainer} className="map-container w-full h-full" />
         <div className="absolute bottom-[8vh] bg-[#13724A] z-10 w-[95vw] h-[10vh] flex flex-col justify-center items-center rounded-lg  gap-3">
-          <div className="border-2 border-[#13724A] absolute -top-8 bg-white w-[70px] h-[70px] flex flex-col justify-center items-center rounded-full">
-          <svg
+          <div onClick={()=> navigate("/cam")} className="border-2 border-[#13724A] absolute -top-8 bg-white w-[70px] h-[70px] flex flex-col justify-center items-center rounded-full">
+            <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="#13724A"
               viewBox="0 0 512 512"
@@ -197,35 +251,42 @@ export default function Home() {
             </svg>
           </div>
           <div className="flex justify-center items-center w-[95vw] gap-3 mt-5">
-            <h2 style={{
-              color: "#fff",
-              fontSize: "1.1rem",
-              letterSpacing: "1px",
-              fontWeight: "600",
-
-            }}>RQI :</h2>
-          <LinearProgress variant="determinate" value={progress} sx={{
-            backgroundColor: "#cfcfcf",
-            '& .MuiLinearProgress-bar': {
-              backgroundColor: color,
-            },
-            width: "75%",
-            height: "10px",
-            borderRadius: "10px",
-          }}/>
+            <h2
+              style={{
+                color: "#fff",
+                fontSize: "1.1rem",
+                letterSpacing: "1px",
+                fontWeight: "600",
+              }}
+            >
+              RQI :
+            </h2>
+            <LinearProgress
+              variant="determinate"
+              value={progress}
+              sx={{
+                backgroundColor: "#cfcfcf",
+                "& .MuiLinearProgress-bar": {
+                  backgroundColor: color,
+                },
+                width: "75%",
+                height: "10px",
+                borderRadius: "10px",
+              }}
+            />
           </div>
         </div>
         <div className="absolute bottom-3 bg-[#13724A] z-10 w-[95vw] h-[5vh] flex flex-col justify-center items-center rounded-lg  gap-3">
-        <Button
-                type="submit"
-                variant="contained"
-                sx={{
-                  width: "95vw",
-                  fontSize: "1rem",
-                }}
-              >
-                My Profile
-              </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              width: "95vw",
+              fontSize: "1rem",
+            }}
+          >
+            My Profile
+          </Button>
         </div>
       </div>
     </Theme>
