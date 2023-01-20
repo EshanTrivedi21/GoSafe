@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Link, useNavigate } from "react-router-dom";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, LinearProgress } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Theme } from "../assets/theme.js";
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
@@ -49,6 +49,23 @@ mapboxgl.accessToken =
   "pk.eyJ1IjoiZXNoYW50cml2ZWRpMjEiLCJhIjoiY2xjaXV6c2lqMTFzNjNvcXVmbzM0aGkwNyJ9.ZsRWT2z--97ajM58KQG4xQ";
 
 export default function Home() {
+  const [progress, setProgress] = React.useState(0);
+  const [color, setColor] = React.useState("");
+
+  useEffect(() => {
+    setProgress(Math.floor(Math.random() * (90 - 60 + 1) + 60));
+    if (progress >= 80) {
+      setColor("#2aa10f");
+    } else if (progress >= 70) {
+      setColor("#ffaa1c");
+    } else if (progress >= 60) {
+      setColor("#ed2938");
+    }
+  }, [progress]);
+
+  console.log(progress);
+  console.log(color);
+
   function clickHandler() {
     document.querySelector(".searchDiv").style.display = "none";
   }
@@ -181,6 +198,24 @@ export default function Home() {
             >
               <path d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 384c-53 0-96-43-96-96s43-96 96-96s96 43 96 96s-43 96-96 96z" />
             </svg>
+          </div>
+          <div className="flex justify-center items-center w-[95vw] gap-3 mt-5">
+            <h2 style={{
+              color: "#fff",
+              fontSize: "1.1rem",
+              letterSpacing: "1px",
+              fontWeight: "600",
+
+            }}>RQI :</h2>
+          <LinearProgress variant="determinate" value={progress} sx={{
+            backgroundColor: "#cfcfcf",
+            '& .MuiLinearProgress-bar': {
+              backgroundColor: color,
+            },
+            width: "75%",
+            height: "10px",
+            borderRadius: "10px",
+          }}/>
           </div>
         </div>
         <div className="absolute bottom-3 bg-[#13724A] z-10 w-[95vw] h-[5vh] flex flex-col justify-center items-center rounded-lg  gap-3">
