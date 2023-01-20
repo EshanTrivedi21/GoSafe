@@ -62,7 +62,7 @@ const Signup = () => {
               }}
             >
               <svg
-                className="w-7 absolute inset-0 mt-10 ml-5"
+                className="w-7 absolute inset-0 mt-5 ml-5"
                 fill="white"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
@@ -108,7 +108,7 @@ const Signup = () => {
                   />
                 </Grid>
                 <Grid item mobile={11} tablet={8.5} laptop={6}>
-                  <CssTextField
+                <CssTextField
                     id="outlined-basic"
                     label="Phone Number"
                     variant="outlined"
