@@ -1,9 +1,9 @@
 import React from 'react'
 
-const welcome = () => {
+const Welcome = () => {
   return (
     <div>welcome</div>
   )
 }
 
-export default welcome
+export default Welcome
