@@ -1,16 +1,12 @@
-import React from 'react';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Home from './pages/Home';
-import Camera from './pages/Camera';
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Welcome from './pages/Welcome';
-import Add from './pages/Add';
-
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home";
+import Camera from "./pages/Camera";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Welcome from "./pages/Welcome";
+import Add from "./pages/Add";
 
 function App() {
   const router = createBrowserRouter([
@@ -28,24 +24,24 @@ function App() {
     },
     {
       path: "/",
-      element: <Home/>,
+      element: <Home />,
     },
     {
       path: "/dashboard",
-      element: <Dashboard/>,
+      element: <Dashboard />,
     },
     {
       path: "/add",
-      element: <Add/>,
+      element: <Add />,
     },
     {
       path: "/cam",
-      element: <Camera/>,
+      element: <Camera />,
     },
-  ])
+  ]);
   return (
     <>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </>
   );
 }
