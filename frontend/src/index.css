@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
   margin: 0;
@@ -15,11 +18,16 @@ body {
   overflow: hidden;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 .mapboxgl-canvas-container, .mapboxgl-canvas{
   height: 100% !important;
   width: 100% !important;
+}
+.marker{
+  background-image: url('../public/marker.png');
+  background-size: cover;
+  width: 30px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
 }
