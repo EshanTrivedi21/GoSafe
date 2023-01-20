@@ -45,7 +45,7 @@ export default function Add() {
   return (
     <Theme>
       <svg
-        className="w-7 absolute inset-0 mt-10 ml-5"
+        className="w-7 absolute inset-0 mt-5 ml-5"
         fill="white"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 448 512"
@@ -56,7 +56,7 @@ export default function Add() {
         {img ? (
           <img
             src={img.img}
-            className="w-80 border-2 border-[#000] rounded-lg mb-7"
+            className="w-80 border-2 border-[#000] rounded-lg mb-5"
             alt=""
           />
         ) : (
@@ -69,18 +69,10 @@ export default function Add() {
         )}
         <CssTextField
           id="outlined-basic"
-          label="Location"
-          variant="outlined"
-          sx={{
-            width: "80%",
-          }}
-        />
-        <CssTextField
-          id="outlined-basic"
           label="Problem Faced"
           variant="outlined"
           multiline
-          minRows={3}
+          minRows={4}
           sx={{
             width: "80%",
           }}

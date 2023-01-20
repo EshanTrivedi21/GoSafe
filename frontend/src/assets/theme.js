@@ -36,7 +36,11 @@ const theme = createTheme({
           textTransform: "none",
           letterSpacing: "0.1rem",
           borderRadius: "10px",
-        }
+        },
+        '&:hover': {
+          backgroundColor: '#fff',
+          color: '#fff',
+      },
       }
     }
   },

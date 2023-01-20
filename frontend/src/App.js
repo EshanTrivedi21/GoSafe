@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Welcome from "./pages/Welcome";
 import Add from "./pages/Add";
+import Profile from "./pages/Profile";
 
 function App() {
   const router = createBrowserRouter([
@@ -37,6 +38,10 @@ function App() {
     {
       path: "/cam",
       element: <Camera />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
     },
   ]);
   return (

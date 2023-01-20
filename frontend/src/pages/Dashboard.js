@@ -45,7 +45,7 @@ export default function LabTabs() {
               <div className="flex flex-row justify-between">
                 {/* {image} */}
                 <div className="flex justify-center items-center">
-                  <img src="https://picsum.photos/200/300" alt="image" style={{
+                  <img src="https://picsum.photos/200/300" alt="" style={{
                     height: "100px",
                     width: "100px",
                     borderRadius: "10px",
