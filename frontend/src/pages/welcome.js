@@ -5,9 +5,18 @@ import { Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import homepagesvg from "../assets/homepage.svg";
 import { useNavigate } from "react-router-dom";
+import { apiCheckLogin } from "../utilities/apiCall";
 
 const Welcome = () => {
   const navigate = useNavigate();
+  let [a, setA] = React.useState(null);
+  React.useEffect(() => {
+    if (!a) {
+      apiCheckLogin(setA);
+    } else {
+      if (!a.err) navigate("/");
+    }
+  }, [a]);
   return (
     <Theme>
       <Grid container justifyContent="center">

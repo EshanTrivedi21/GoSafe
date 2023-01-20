@@ -2,6 +2,8 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import { Theme } from "../assets/theme.js";
 import { Grid, Box, Typography, TextField, Button } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import apiPost, { apiCheckLogin } from "../utilities/apiCall";
 
 const CssTextField = styled(TextField)({
   label: {
@@ -39,6 +41,41 @@ const CssTextField = styled(TextField)({
 });
 
 const Login = () => {
+  let [a, setA] = React.useState(null);
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!a) {
+      apiCheckLogin(setA);
+    } else {
+      if (!a.err) navigate("/");
+    }
+  }, [a]);
+  let [Phone, setPhone] = React.useState("");
+  let [Password, setPassword] = React.useState("");
+  let [user, setUser] = React.useState(null);
+  React.useEffect(() => {
+    if (user) {
+      if (!user.err) {
+        console.log(user);
+        if (user.role === "admin") {
+          navigate("/dashboard");
+        } else {
+          navigate("/");
+        }
+      }
+    }
+  }, [user]);
+  async function loginToApp(e) {
+    e.preventDefault();
+    if (Phone && Password) {
+      if (Phone.length < 10) {
+        alert("Phone number must be 10 digits");
+        return;
+      } else {
+        await apiPost("auth/login", { Phone, Password }, setUser);
+      }
+    }
+  }
   return (
     <>
       <Theme>
@@ -46,6 +83,9 @@ const Login = () => {
           <Grid item mobile={12} tablet={8.5} laptop={5}>
             <Box
               component="form"
+              onSubmit={(e) => {
+                loginToApp(e);
+              }}
               sx={{
                 width: "100%",
                 minHeight: { mobile: "100vh", tablet: "auto", laptop: "auto" },
@@ -66,6 +106,7 @@ const Login = () => {
                 fill="white"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
+                onClick={() => window.history.back()}
               >
                 <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
               </svg>
@@ -100,18 +141,20 @@ const Login = () => {
               <Grid container justifyContent="center" spacing={3}>
                 <Grid item mobile={11} tablet={8.5} laptop={6}>
                   <CssTextField
-                    id="outlined-basic"
-                    label="Username"
+                    label="Phone"
                     variant="outlined"
                     fullWidth
+                    type={"number"}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 </Grid>
                 <Grid item mobile={11} tablet={8.5} laptop={6}>
                   <CssTextField
-                    id="outlined-basic"
                     label="Password"
                     variant="outlined"
                     fullWidth
+                    type={"password"}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </Grid>
               </Grid>
@@ -137,12 +180,15 @@ const Login = () => {
                     color: "custom.contrastText",
                     width: { mobile: "90%", tablet: "40%", laptop: "40%" },
                   }}
+                  type="submit"
                 >
                   Log In
                 </Button>
                 <Typography
                   variant="h6"
+                  component={Link}
                   color="primary.contrastText"
+                  to={"/signup"}
                   sx={{
                     fontStyle: "italic",
                     fontSize: "0.65rem",

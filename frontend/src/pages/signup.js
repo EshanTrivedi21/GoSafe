@@ -2,6 +2,9 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import { Theme } from "../assets/theme.js";
 import { Grid, Box, Typography, TextField, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import apiPost, { apiCheckLogin } from "../utilities/apiCall";
 
 const CssTextField = styled(TextField)({
   label: {
@@ -39,6 +42,34 @@ const CssTextField = styled(TextField)({
 });
 
 const Signup = () => {
+  let navigate = useNavigate();
+  let [Username, setUsername] = React.useState("");
+  let [Password, setPassword] = React.useState("");
+  let [confirmPassword, setConfirmPassword] = React.useState("");
+  let [Phone, setPhone] = React.useState("");
+  let [user, setUser] = React.useState(null);
+  let [a, setA] = React.useState(null);
+  React.useEffect(() => {
+    if (!a) {
+      apiCheckLogin(setA);
+    } else {
+      if (!a.err) navigate("/");
+    }
+  }, [a]);
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (Username && Password && confirmPassword && Phone) {
+      console.log(Username, Password, confirmPassword, Phone);
+      if (Password === confirmPassword) {
+        await apiPost("auth/signup", { Username, Phone, Password }, setUser);
+      }
+    }
+  }
+  React.useEffect(() => {
+    if (user) {
+      if (!user.err) navigate("/");
+    }
+  }, [user]);
   return (
     <>
       <Theme>
@@ -46,6 +77,9 @@ const Signup = () => {
           <Grid item mobile={12} tablet={8.5} laptop={5}>
             <Box
               component="form"
+              onSubmit={(e) => {
+                handleSubmit(e);
+              }}
               sx={{
                 width: "100%",
                 minHeight: { mobile: "100vh", tablet: "auto", laptop: "auto" },
@@ -66,6 +100,7 @@ const Signup = () => {
                 fill="white"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
+                onClick={() => window.history.back()}
               >
                 <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
               </svg>
@@ -101,34 +136,38 @@ const Signup = () => {
               <Grid container justifyContent="center" spacing={3}>
                 <Grid item mobile={11} tablet={8.5} laptop={6}>
                   <CssTextField
-                    id="outlined-basic"
                     label="Username"
                     variant="outlined"
                     fullWidth
+                    type={"text"}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </Grid>
                 <Grid item mobile={11} tablet={8.5} laptop={6}>
                   <CssTextField
-                    id="outlined-basic"
                     label="Phone Number"
                     variant="outlined"
                     fullWidth
+                    type={"number"}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 </Grid>
                 <Grid item mobile={11} tablet={8.5} laptop={6}>
                   <CssTextField
-                    id="outlined-basic"
                     label="Password"
                     variant="outlined"
                     fullWidth
+                    type={"Password"}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </Grid>
                 <Grid item mobile={11} tablet={8.5} laptop={6}>
                   <CssTextField
-                    id="outlined-basic"
                     label="Confirm Password"
                     variant="outlined"
                     fullWidth
+                    type={"Password"}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </Grid>
               </Grid>
@@ -154,12 +193,15 @@ const Signup = () => {
                     color: "custom.contrastText",
                     width: { mobile: "90%", tablet: "40%", laptop: "40%" },
                   }}
+                  type="submit"
                 >
                   Sign Up
                 </Button>
                 <Typography
                   variant="h6"
                   color="primary.contrastText"
+                  component={Link}
+                  to="/login"
                   sx={{
                     fontStyle: "italic",
                     fontSize: "0.65rem",

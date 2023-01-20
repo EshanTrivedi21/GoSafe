@@ -1,0 +1,4 @@
+{
+    "server": "localhost:4000",
+    "frontend": "localhost:3000"
+}
