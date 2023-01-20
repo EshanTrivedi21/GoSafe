@@ -191,7 +191,7 @@ export default function LabTabs() {
         >
           <div
             ref={mapContainer}
-            className="map-container w-[100vw] h-[90vh] inset-0 -z-5"
+            className="map-container w-[100vw] h-[94vh] inset-0 -z-5"
           />
           <StyledPopover
             id={id}
