@@ -11,10 +11,14 @@ const Login = () => {
             sx={{
               width: "100%",
               minHeight: { mobile: "100vh", tablet: "auto", laptop: "auto" },
-              backgroundColor: "primary.main",
+              backgroundColor: {
+                mobile: "primary.main",
+                tablet: "secondary.main",
+                laptop: "secondary.main",
+              },
               my: "50vh",
               p: 5,
-              py: { mobile: 14, tablet: 7, laptop: 7 },
+              py: { mobile: 14, tablet: 5, laptop: 5 },
               transform: "translateY(-50%)",
               overflow: "hidden",
             }}

@@ -16,7 +16,11 @@ const Welcome = () => {
             sx={{
               width: "100%",
               minHeight: { mobile: "100vh", tablet: "auto", laptop: "auto" },
-              backgroundColor: { mobile: "primary.main", tablet: "secondary.main", laptop: "secondary.main" },
+              backgroundColor: {
+                mobile: "primary.main",
+                tablet: "secondary.main",
+                laptop: "secondary.main",
+              },
               my: "50vh",
               p: 5,
               py: { mobile: 14, tablet: 5, laptop: 5 },
@@ -43,7 +47,7 @@ const Welcome = () => {
                 textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
               }}
             >
-              GOSAFE!
+              GOSAFE
             </Typography>
             <Typography
               variant="h6"

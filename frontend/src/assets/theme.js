@@ -25,19 +25,6 @@ const theme = createTheme({
   },
 
   components: {
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-          color: "#fff",
-        },
-        input: {
-          color: "white",
-          "&::before": {
-            border: "1px solid rgba(0, 0, 0, 0.42)",
-          },
-        },
-      },
-    },
     MuiButton: {
       defaultProps: {
         disableRipple: true,
@@ -48,7 +35,7 @@ const theme = createTheme({
           fontWeight: "bold",
           textTransform: "none",
           letterSpacing: "0.1rem",
-          borderRadius: "15px",
+          borderRadius: "10px",
         }
       }
     }
