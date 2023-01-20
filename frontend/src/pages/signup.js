@@ -90,7 +90,7 @@ const Signup = () => {
                 “Create your Account”
               </Typography>
               <Grid container justifyContent="center" spacing={3}>
-                <Grid item mobile={11} tablet={8.5} laptop={4}>
+                <Grid item mobile={11} tablet={8.5} laptop={6}>
                   <CssTextField
                     id="outlined-basic"
                     label="Username"
@@ -98,7 +98,7 @@ const Signup = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item mobile={11} tablet={8.5} laptop={4}>
+                <Grid item mobile={11} tablet={8.5} laptop={6}>
                   <CssTextField
                     id="outlined-basic"
                     label="Phone Number"
@@ -106,7 +106,7 @@ const Signup = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item mobile={11} tablet={8.5} laptop={4}>
+                <Grid item mobile={11} tablet={8.5} laptop={6}>
                   <CssTextField
                     id="outlined-basic"
                     label="Password"
@@ -114,7 +114,7 @@ const Signup = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item mobile={11} tablet={8.5} laptop={4}>
+                <Grid item mobile={11} tablet={8.5} laptop={6}>
                   <CssTextField
                     id="outlined-basic"
                     label="Confirm Password"
@@ -134,7 +134,7 @@ const Signup = () => {
                   mt: 5,
                 }}
               > By registering you agree to our terms and conditions</Typography>
-              <div className="flex flex-col sm:flex-row justify-center items-center mt-20">
+              <div className="flex flex-col justify-center items-center mt-20">
               <Button
                 variant="contained"
                 sx={{
