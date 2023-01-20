@@ -11,21 +11,25 @@ const Welcome = () => {
   return (
     <Theme>
       <Grid container justifyContent="center">
-        <Grid item mobile={12} tablet={8.5} laptop={5}>
+        <Grid item mobile={12} tablet={8.5} laptop={4}>
           <Box
             sx={{
               width: "100%",
               minHeight: { mobile: "100vh", tablet: "auto", laptop: "auto" },
-              backgroundColor: "primary.main",
+              backgroundColor: { mobile: "primary.main", tablet: "secondary.main", laptop: "secondary.main" },
               my: "50vh",
               p: 5,
-              py: { mobile: 14, tablet: 7, laptop: 7 },
+              py: { mobile: 14, tablet: 5, laptop: 5 },
               transform: "translateY(-50%)",
               overflow: "hidden",
             }}
           >
-            <div className="flex flex-col justify-center items-center">
-              <img src={homepagesvg} alt="illustration" className=" w-[70vw]" />
+            <div className="flex flex-col justify-center items-center ">
+              <img
+                src={homepagesvg}
+                alt="illustration"
+                className=" w-[70vw] sm:hidden"
+              />
             </div>
             <Typography
               variant="h3"
@@ -34,7 +38,7 @@ const Welcome = () => {
               sx={{
                 fontWeight: "bold",
                 textAlign: "center",
-                mt: 12.5,
+                mt: { mobile: 12.5, tablet: 5, laptop: 5 },
                 mb: 2,
                 textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
               }}
@@ -49,17 +53,18 @@ const Welcome = () => {
                 letterSpacing: "0.1rem",
                 textAlign: "center",
                 textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
+                mb: 7.5,
               }}
             >
               “We are here for you”
             </Typography>
-            <div className="flex flex-col justify-center items-center gap-5 mt-10">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-5 mt-10">
               <Button
                 variant="contained"
                 sx={{
                   backgroundColor: "custom.main",
                   color: "custom.contrastText",
-                  width: "85%",
+                  width: { mobile: "85%", tablet: "40%", laptop: "40%" },
                 }}
                 onClick={() => navigate("/login")}
               >
@@ -71,7 +76,7 @@ const Welcome = () => {
                   backgroundColor: "rgb(255, 255, 255, 0.1)",
                   borderColor: "custom.main",
                   color: "custom.main",
-                  width: "85%",
+                  width: { mobile: "85%", tablet: "40%", laptop: "40%" },
                 }}
                 onClick={() => navigate("/signup")}
               >

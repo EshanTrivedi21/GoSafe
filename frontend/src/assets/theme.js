@@ -4,7 +4,7 @@ const theme = createTheme({
   breakpoints: {
     values: {
       mobile: 0,
-      tablet: 640,
+      tablet: 500,
       laptop: 1024,
       desktop: 1200,
     },
@@ -44,15 +44,11 @@ const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          padding: "7.5px 50px",
-          fontSize: "1.2rem",
+          fontSize: "1rem",
           fontWeight: "bold",
           textTransform: "none",
           letterSpacing: "0.1rem",
           borderRadius: "15px",
-          "&.active": {
-            background:'black',
-          },
         }
       }
     }
