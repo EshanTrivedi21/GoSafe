@@ -24,7 +24,7 @@ export default function LabTabs() {
       if (a.err) {
         navigate("/welcome");
       }
-      else if(a.role!=="admin"){
+      else if(a.user.Role!=="admin"){
         navigate("/");
       }
     }

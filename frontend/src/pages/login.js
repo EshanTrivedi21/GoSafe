@@ -47,7 +47,10 @@ const Login = () => {
     if (!a) {
       apiCheckLogin(setA);
     } else {
-      if (!a.err) navigate("/");
+      if (!a.err) {
+        if (a.user.Role === "admin") navigate("/dashboard");
+        else navigate("/");
+      }
     }
   }, [a]);
   let [Phone, setPhone] = React.useState("");
