@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import Stat from "./Stat";
+import StatDone from "./StatDone";
+
 
 function getRandomCoordinates(currentLocation, radius) {
   const x0 = currentLocation[0];
@@ -216,26 +218,15 @@ export default function LabTabs() {
         <TabPanel value="2">
           <Stack spacing={2}>
             <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
-              <Stat />
-            </Item>
-            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
-              <Stat />
-            </Item>
-            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
-              <Stat />
-            </Item>
-            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
-              <Stat />
-            </Item>
-            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
-              <Stat />
-            </Item>
-            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
-              <Stat />
+              <Stat image="homepage.svg" location="Thakur Village, Kandivali" username="Eshan Trivedi" date="20/01/23"/>
             </Item>
           </Stack>
         </TabPanel>
-        <TabPanel value="3">Item Three</TabPanel>
+        <TabPanel value="3"><Stack spacing={2}>
+            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
+              <StatDone image="homepage.svg" location="Thakur Village, Kandivali" username="Eshan Trivedi" date="20/01/23" resolvedDate="21/01/23"/>
+            </Item>
+          </Stack></TabPanel>
       </TabContext>
     </Box>
   );
