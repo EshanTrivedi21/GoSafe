@@ -37,7 +37,7 @@ export default function Camera() {
       </Typography>
       <Webcam
         audio={false}
-        screenshotFormat="image/jpeg"
+        screenshotFormat="image/png"
         videoConstraints={videoConstraints}
         className="w-80 border-2 border-[#000] border-b-0"
       >

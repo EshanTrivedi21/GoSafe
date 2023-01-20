@@ -49,12 +49,19 @@ export default function Add() {
     e.preventDefault();
     navigator.geolocation.getCurrentPosition((position) => {
       let data = new FormData();
-      data.append("Image", Image);
+      // fetch(Image)
+      //   .then((res) => res.blob())
+      //   .then((blob) => {
+      // const file = new File([Image], "image.jpeg", { type: "image/jpeg" });
+      let base64Data = img.img.replace(/^data:image\/png;base64,/, "");
+      // console.log(base64Data);
+      data.append("Image", base64Data);
       data.append("Problem", Problem);
       data.append("lat", position.coords.latitude);
       data.append("lng", position.coords.longitude);
       apiPost("add/pothole", data, setUser);
     });
+    // });
   }
   return (
     <Theme>
@@ -66,7 +73,10 @@ export default function Add() {
       >
         <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
       </svg>
-      <div className="w-full h-[100vh] flex justify-center items-center flex-col bg-[#13724A] gap-5">
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="w-full h-[100vh] flex justify-center items-center flex-col bg-[#13724A] gap-5"
+      >
         {img ? (
           <img
             src={img.img}
@@ -82,11 +92,11 @@ export default function Add() {
           </Link>
         )}
         <CssTextField
-          id="outlined-basic"
           label="Problem Faced"
           variant="outlined"
           multiline
           minRows={4}
+          onChange={(e) => setProblem(e.target.value)}
           sx={{
             width: "80%",
           }}
@@ -99,6 +109,7 @@ export default function Add() {
               color: "custom.contrastText",
               width: { mobile: "112.5%", tablet: "40%", laptop: "40%" },
             }}
+            type="submit"
           >
             Report Pothole
           </Button>
@@ -116,7 +127,7 @@ export default function Add() {
             "I Confirm that the Image Provided is not Misleading"
           </Typography>
         </div>
-      </div>
+      </form>
     </Theme>
   );
 }
