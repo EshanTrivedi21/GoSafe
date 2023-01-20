@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   token: { type: String },
   CreatedAt: { type: Date, default: Date.now },
   reward: { type: Number, default: 0 },
+  Role: { type: String, default: "user" },
 });
 
 module.exports = mongoose.model("user", userSchema);

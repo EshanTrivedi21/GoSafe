@@ -45,6 +45,7 @@ router.post("/signup", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   try {
     const { Phone, Password } = req.body;
+    console.log(Phone, Password);
     if (!(Phone && Password)) {
       return res.status(400).json({ err: "All input is required" });
     }
@@ -71,7 +72,7 @@ router.post("/login", async (req, res, next) => {
         expires: new Date(Date.now() + 2 * 60 * 60 * 1000),
         httpOnly: true,
       });
-      res.status(201).json({ err: null });
+      res.status(201).json({ err: null, role: user.Role });
     }
   } catch (err) {
     res.status(500).json({ err: err.message });

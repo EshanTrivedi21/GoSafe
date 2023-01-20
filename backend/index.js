@@ -19,7 +19,7 @@ app.use(function (req, res, next) {
 });
 app.use(
   cors({
-    origin: `http://${url.server}/`,
+    origin: `http://${url.frontend}`,
     credentials: true,
   })
 );

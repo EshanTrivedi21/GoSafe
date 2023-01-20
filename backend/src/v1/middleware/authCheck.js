@@ -11,7 +11,7 @@ async function authCheck(req, res, next) {
     if (!user) return res.status(401).json({ err: "Invalid Token" });
     decoded['Username'] = user.Username;
     decoded['Phone'] = user.Phone;
-    decoded['Bio'] = user.Bio;
+    decoded['Role'] = user.Role;
     req.user = decoded;
   } catch (err) {
     return res.status(401).json({ err: "Invalid Token" });
