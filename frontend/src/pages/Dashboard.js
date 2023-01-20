@@ -4,11 +4,10 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
-
-
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+import Stat from "./Stat";
 
 export default function LabTabs() {
   const [value, setValue] = React.useState("1");
@@ -17,14 +16,13 @@ export default function LabTabs() {
     setValue(newValue);
   };
   const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     padding: theme.spacing(1),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
   }));
 
   return (
-    
     <Box sx={{ width: "100%", typography: "body1" }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -41,36 +39,24 @@ export default function LabTabs() {
         </Box>
         <TabPanel value="1">
           <Stack spacing={2}>
-            <Item>
-              <div className="flex flex-row justify-between">
-                {/* {image} */}
-                <div className="flex justify-center items-center">
-                  <img src="https://picsum.photos/200/300" alt="image" style={{
-                    height: "100px",
-                    width: "100px",
-                    borderRadius: "10px",
-                    border: "1px solid #000",
-                  }}/>
-                </div>
-              {/* info */}
-                <div>
-                  <div className="flex flex-col items-start">
-                    <h1 className="text-4xl font-semibold">Kalyan📌</h1>
-                    <p>Sector 44 tandel apartment road Kalyan 400768</p>   
-                    <br/>
-                    <p>
-                      Reported By user <span className="text-black font-bold underline">BHAVNA WAGH</span>
-                    </p>
-                  </div>
-                  
-                </div>
-              </div>
+            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
+              <Stat />
             </Item>
-            <Item>Item 2</Item>
-            <Item>Item 3</Item>
-            <Item>Item 4</Item>
-            <Item>Item 5</Item>
-            <Item>Item 6</Item>
+            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
+              <Stat />
+            </Item>
+            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
+              <Stat />
+            </Item>
+            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
+              <Stat />
+            </Item>
+            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
+              <Stat />
+            </Item>
+            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
+              <Stat />
+            </Item>
           </Stack>
         </TabPanel>
         <TabPanel value="2">Item Two</TabPanel>
