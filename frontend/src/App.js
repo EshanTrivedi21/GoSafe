@@ -4,10 +4,12 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Home from './pages/Home';
+import Camera from './pages/Camera';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Welcome from './pages/Welcome';
+import Add from './pages/Add';
 
 
 function App() {
@@ -31,6 +33,14 @@ function App() {
     {
       path: "/dashboard",
       element: <Dashboard/>,
+    },
+    {
+      path: "/add",
+      element: <Add/>,
+    },
+    {
+      path: "/cam",
+      element: <Camera/>,
     },
   ])
   return (
