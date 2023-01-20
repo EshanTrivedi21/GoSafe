@@ -1,7 +1,13 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { Button, FormControl, FormLabel, RadioGroup } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  Checkbox,
+} from "@mui/material";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
@@ -55,7 +61,7 @@ const style = {
   pb: 3,
 };
 
-const Stat = () => {
+const Stat = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -63,11 +69,23 @@ const Stat = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  console.log(`../assets/${props.image}`);
   return (
     <>
-      <div className="flex flex-row justify-around items-center gap-5 ">
+      <div className="flex flex-row justify-around items-center gap-5 ml-10">
+        <Checkbox
+          sx={{
+            position: "absolute",
+            left: "25px",
+            color: "#fff",
+            "&.Mui-checked": {
+              color: "#fff",
+            },
+          }}
+        />
         <img
-          src={require("../assets/randomPothole.jpg")}
+          src={require(`../assets/${props.image}`)}
           alt=""
           style={{
             width: "70px",
@@ -82,14 +100,13 @@ const Stat = () => {
             fontSize: "1.5rem",
           }}
         >
-          Thakur Village, Kandivali
+          {props.location}
         </h1>
         <button
           onClick={handleOpen}
           className="bg-[#165C3F] text-white px-10 py-1 rounded-md border-white border-2 text-md tracking-widest"
         >
-          {" "}
-          Assign{" "}
+          Assign
         </button>
         <h1
           style={{
@@ -97,7 +114,7 @@ const Stat = () => {
             fontSize: "1.2rem",
           }}
         >
-          by Eshan Trivedi
+          by {props.username}, {props.date}
         </h1>
         <Modal
           open={open}
@@ -178,11 +195,15 @@ const Stat = () => {
                 />
                 <FormControlLabel
                   value="HCC Limited"
-                  control={<Radio sx={{
-                    '&.Mui-checked' : {
-                      color: '#165C3F'
-                    }
-                  }}/>}
+                  control={
+                    <Radio
+                      sx={{
+                        "&.Mui-checked": {
+                          color: "#165C3F",
+                        },
+                      }}
+                    />
+                  }
                   label="HCC Limited"
                 />
               </RadioGroup>
