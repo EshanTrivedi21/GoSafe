@@ -31,7 +31,7 @@ const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          fontSize: "1rem",
+          fontSize: "1.25rem",
           fontWeight: "bold",
           textTransform: "none",
           letterSpacing: "0.1rem",
