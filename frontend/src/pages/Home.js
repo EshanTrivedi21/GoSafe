@@ -17,7 +17,7 @@ const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
     color: "#fff",
   },
-  "& .Mui-disabled": {
+  "& label.Mui-disabled": {
     color: "#fff",
   },
   "& .MuiOutlinedInput-root": {
@@ -62,9 +62,6 @@ export default function Home() {
       setColor("#ed2938");
     }
   }, [progress]);
-
-  console.log(progress);
-  console.log(color);
 
   function clickHandler() {
     document.querySelector(".searchDiv").style.display = "none";
