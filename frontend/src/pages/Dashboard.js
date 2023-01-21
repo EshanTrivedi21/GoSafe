@@ -235,7 +235,7 @@ export default function LabTabs() {
                 fontSize: "1.1rem",
               }}
             >
-              Thakur Village, Kandivali
+              Highway, Vile Parle (E)
             </h1>
             <h3
               style={{
