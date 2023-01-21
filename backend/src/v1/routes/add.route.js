@@ -25,8 +25,17 @@ router.post("/pothole", authCheck, async (req, res, next) => {
       ) {
         Fileid = uuid();
       }
+      let pothole = await Pothole.create({
+        lat,
+        lng,
+        Image: "/usercontent/",
+        Problem,
+        by: req.user.user_id,
+      });
+      pothole.Image = "/usercontent/" + folder + pothole._id + "." + fileExt,
+      pothole.save();
       fs.writeFile(
-        "./public/usercontent/" + folder + Fileid + "." + fileExt,
+        "./public/usercontent/" + folder + pothole._id + "." + fileExt,
         file,
         "base64",
         async function (err) {
@@ -34,13 +43,7 @@ router.post("/pothole", authCheck, async (req, res, next) => {
             return console.log(err);
           }
           let user = await User.findById(req.user.user_id);
-          const pothole = await Pothole.create({
-            lat,
-            lng,
-            Image: "/usercontent/" + folder + Fileid + "." + fileExt,
-            Problem,
-            by: req.user.user_id,
-          });
+          
           user.reward += 10;
           user.save();
           res.status(200).json({ err: null });
