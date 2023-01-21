@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Link, useNavigate } from "react-router-dom";
-import Geohash from "latlon-geohash";
 import { TextField, Button, LinearProgress } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Theme } from "../assets/theme.js";
@@ -55,6 +54,8 @@ export default function Home() {
   const [color, setColor] = React.useState("");
   const [text, setText] = useState("");
 
+  const [routeData, setRouteData] = useState(null);
+
   function search() {
     fetch(
       "https://api.unl.global/v2/geocode/forward?" +
@@ -76,35 +77,21 @@ export default function Home() {
       .then((response) => response.json())
       .then((response) => {
         navigator.geolocation.getCurrentPosition((position) => {
-          // let my = Geohash.encode(
-          //   position.coords.latitude,
-          //   position.coords.longitude,
-          //   9
-          // );
-          // let way = Geohash.encode(
-          //   response.features[0].geometry.coordinates[1],
-          //   response.features[0].geometry.coordinates[0],
-          //   9
-          // );
-          // console.log(my, way);
-          let a = `${position.coords.longitude},${position.coords.latitude};${response.features[0].geometry.coordinates[0]},${response.features[0].geometry.coordinates[1]}`
+          let a = `${position.coords.longitude},${position.coords.latitude};${response.features[0].geometry.coordinates[0]},${response.features[0].geometry.coordinates[1]}`;
           axios
-            .get(
-              `https://api.mapbox.com/directions/v5/mapbox/driving/${a}`,
-              {
-                params: {
-                  access_token: mapboxgl.accessToken,
-                  geometries: "geojson",
-                  steps: true,
-                  overview: "full",
-                  alternatives: true,
-                  exclude: "unpaved",
-                },
-                withCredentials: false,
-              }
-            )
+            .get(`https://api.mapbox.com/directions/v5/mapbox/driving/${a}`, {
+              params: {
+                access_token: mapboxgl.accessToken,
+                geometries: "geojson",
+                steps: true,
+                overview: "full",
+                alternatives: true,
+                exclude: "unpaved",
+              },
+              withCredentials: false,
+            })
             .then((res) => {
-              console.log(res);
+              setRouteData(res);
               const geojson = res.data.routes[0].geometry;
               addRoute(geojson);
             })
@@ -122,7 +109,7 @@ export default function Home() {
     } else if (progress >= 60) {
       setColor("#ed2938");
     }
-  }, [progress]);
+  }, [progress, routeData]);
 
   function clickHandler() {
     document.querySelector(".searchDiv").style.display = "none";
@@ -316,31 +303,33 @@ export default function Home() {
               <path d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 384c-53 0-96-43-96-96s43-96 96-96s96 43 96 96s-43 96-96 96z" />
             </svg>
           </div>
-          <div className="flex justify-center items-center w-[95vw] gap-3 mt-5">
-            <h2
-              style={{
-                color: "#fff",
-                fontSize: "1.1rem",
-                letterSpacing: "1px",
-                fontWeight: "600",
-              }}
-            >
-              RQI :
-            </h2>
-            <LinearProgress
-              variant="determinate"
-              value={progress}
-              sx={{
-                backgroundColor: "#cfcfcf",
-                "& .MuiLinearProgress-bar": {
-                  backgroundColor: color,
-                },
-                width: "75%",
-                height: "10px",
-                borderRadius: "10px",
-              }}
-            />
-          </div>
+          {routeData ? (
+            <div className="flex justify-center items-center w-[95vw] gap-3 mt-5">
+              <h2
+                style={{
+                  color: "#fff",
+                  fontSize: "1.1rem",
+                  letterSpacing: "1px",
+                  fontWeight: "600",
+                }}
+              >
+                RQI :
+              </h2>
+              <LinearProgress
+                variant="determinate"
+                value={progress}
+                sx={{
+                  backgroundColor: "#cfcfcf",
+                  "& .MuiLinearProgress-bar": {
+                    backgroundColor: color,
+                  },
+                  width: "75%",
+                  height: "10px",
+                  borderRadius: "10px",
+                }}
+              />
+            </div>
+          ) : null}
         </div>
         <div className="absolute bottom-3 bg-[#13724A] z-10 w-[95vw] h-[5vh] flex flex-col justify-center items-center rounded-lg  gap-3">
           <Button
