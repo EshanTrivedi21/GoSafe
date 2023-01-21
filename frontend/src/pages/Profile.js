@@ -2,7 +2,6 @@ import React from 'react';
 import { Theme } from "../assets/theme.js";
 import { Grid, Box, Typography, TextField, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
 
 const CssTextField = styled(TextField)({
   label: {
@@ -21,7 +20,7 @@ const CssTextField = styled(TextField)({
       borderColor: "#000",
     },
     "&:hover fieldset": {
-      borderColor: "#fff",
+      borderColor: "#fff",  
     },
     "&.Mui-focused fieldset": {
       borderColor: "#fff",
@@ -47,7 +46,6 @@ export default function Profile() {
         <Grid container justifyContent="center">
           <Grid item mobile={12} tablet={8.5} laptop={5}>
             <Box
-              component="form"
               sx={{
                 width: "100%",
                 minHeight: { mobile: "100vh", tablet: "auto", laptop: "auto" },
@@ -80,7 +78,7 @@ export default function Profile() {
                   fontWeight: "bold",
                   textAlign: "center",
                   mt: { mobile: 0, tablet: 5, laptop: 5 },
-                  mb: 2,
+                  mb: 15,
                   textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
                   fontSize: "2.5rem",
                 }}
@@ -88,62 +86,92 @@ export default function Profile() {
                 User Profile
               </Typography>
 
-              <div className="flex flex-col justify-center items-center mt-20">
-                <Button disabled
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "custom.main",
-                    color: "custom.contrastText",
-                    width: { mobile: "90%", tablet: "40%", laptop: "40%" },
-                    height: { mobile: "60px", tablet: "50px", laptop: "50px" },
-                  }}
-                  type="submit"
-                >
-                  Kunal Chaturvedi
-                </Button>
-              </div>
-              <div className="flex flex-col justify-center items-center mt-5">
-                <Button disabled 
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "custom.main",
-                    color: "custom.contrastText",
-                    width: { mobile: "90%", tablet: "40%", laptop: "40%" },
-                    height: { mobile: "60px", tablet: "50px", laptop: "50px" },
-                  }}
-                  type="submit"
-                >
-                  7999250587
-                </Button>
-              </div>
-              <div className="flex flex-col justify-center items-center mt-20">
+              <Grid container justifyContent="center" spacing={1.5}>
+                <Grid item mobile={11} tablet={8.5} laptop={6}>
+                  <CssTextField
+                    id='outlined-read-only-input'
+                    defaultValue="Kunal Chturvedi"
+                    variant="outlined"
+                    fullWidth
+                    type={"text"}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Grid>
+                <Grid item mobile={11} tablet={8.5} laptop={6}>
+                  <CssTextField
+                    id='outlined-read-only-input'
+                    defaultValue="7999250587"
+                    variant="outlined"
+                    fullWidth
+                    type={"number"}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              
+              <div className="flex flex-col justify-center items-center mt-10">
                 <Button
                   variant="contained"
                   sx={{
                     backgroundColor: "custom.main",
                     color: "custom.contrastText",
                     width: { mobile: "90%", tablet: "40%", laptop: "40%" },
-                    height: { mobile: "50px", tablet: "50px", laptop: "50px" },
+                    height: { mobile: "55px", tablet: "50px", laptop: "50px" },
                   }}
                   type="submit"
                 >
                   Rewards
                 </Button>
               </div>
-              <div className="flex flex-col justify-center items-center mt-5">
+              <div className="flex flex-col justify-center items-center mt-3">
                 <Button
                   variant="contained"
                   sx={{
                     backgroundColor: "custom.main",
                     color: "custom.contrastText",
                     width: { mobile: "90%", tablet: "40%", laptop: "40%" },
-                    height: { mobile: "50px", tablet: "50px", laptop: "50px" },
+                    height: { mobile: "55px", tablet: "50px", laptop: "50px" },
                   }}
                   type="submit" 
                 >
                   Report History
                 </Button>
               </div>  
+              <div className='flex flex-row justify-between  items-center '>
+                <Typography
+                    variant="h5"
+                    color="primary.contrastText"
+                    to="/Welcome"
+                    sx={{
+                      fontStyle: "italic",
+                      fontSize: "0.65rem",
+                      textAlign: "center",
+                      textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
+                      mt: 1,
+                      textDecoration: "underline",
+                    }}
+                  >
+                    logout!
+                  </Typography>
+                  <Typography
+                      variant="h5"
+                      color="primary.contrastText"
+                      sx={{
+                        fontStyle: "italic",
+                        fontSize: "0.65rem",
+                        textAlign: "center",
+                        textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
+                        mt: 1,
+                        textDecoration: "underline",
+                      }}
+                    >
+                      FAQs?
+                    </Typography>
+                </div>
             </Box>
           </Grid>
         </Grid>
