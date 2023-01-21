@@ -93,7 +93,7 @@ export default function Home() {
             .then((res) => {
               setRouteData(res);
               const geojson = res.data.routes[0].geometry;
-              addRoute(geojson);
+              addTrafficRoute(geojson);
             })
             .catch((err) => {});
         });
@@ -141,34 +141,52 @@ export default function Home() {
       }
     }
   }, [a]);
-  function addRoute(coords) {
-    if (map.current.getSource("route")) {
-      map.current.removeLayer("route");
-      map.current.removeSource("route");
+  function addTrafficRoute(coords) {
+    if (map.current.getSource("traffic-route")) {
+      map.current.removeLayer("traffic-route");
+      map.current.removeSource("traffic-route");
     } else {
       map.current.addLayer({
-        id: "route",
-        type: "line",
+        id: "traffic-route",
+        type: "heatmap",
         source: {
           type: "geojson",
-          data: {
-            type: "Feature",
-            properties: {},
-            geometry: coords,
-          },
-        },
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
+          data: coords,
         },
         paint: {
-          "line-color": "#03AA46",
-          "line-width": 8,
-          "line-opacity": 0.8,
+          "heatmap-intensity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            0,
+            1,
+            9,
+            3,
+          ],
+          "heatmap-color": [
+            "interpolate",
+            ["linear"],
+            ["heatmap-density"],
+            0,
+            "rgba(33,102,172,0)",
+            0.2,
+            "rgb(103,169,207)",
+            0.4,
+            "rgb(209,229,240)",
+            0.6,
+            "rgb(253,219,199)",
+            0.8,
+            "rgb(239,138,98)",
+            1,
+            "rgb(178,24,43)",
+          ],
+          "heatmap-radius": 10,
+          "heatmap-opacity": 1,
         },
       });
     }
   }
+
   useEffect(() => {
     if (map.current) return;
     map.current = new mapboxgl.Map({
@@ -186,28 +204,24 @@ export default function Home() {
         .addTo(map.current);
     });
   }, []);
+
   useEffect(() => {
     if (!map.current) return;
     map.current.on("load", () => {
       axios
         .get(
-          `https://api.mapbox.com/directions/v5/mapbox/driving/${72.884217},${19.150826};${72.829198},${19.106933}`,
+          `https://api.mapbox.com/traffic-data/v1/flow?coordinates=${72.884217},${19.150826};${72.829198},${19.106933}`,
           {
             params: {
               access_token: mapboxgl.accessToken,
-              geometries: "geojson",
-              steps: true,
-              overview: "full",
-              alternatives: true,
-              exclude: "unpaved",
             },
             withCredentials: false,
           }
         )
         .then((res) => {
           console.log(res);
-          const geojson = res.data.routes[0].geometry;
-          addRoute(geojson);
+          const geojson = res.data;
+          addTrafficRoute(geojson);
         });
     });
   }, []);
