@@ -1,45 +1,24 @@
 import React from 'react';
 import { Theme } from "../assets/theme.js";
 import { Grid, Box, Typography, TextField, Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
-
-const CssTextField = styled(TextField)({
-  label: {
-    color: "#fff",
-  },
-  "&.MuiTextField-root": {
-    backgroundColor: "#165C3F",
-  },
-
-  "& label.Mui-focused": {
-    color: "#fff",
-  },
-  "& .MuiOutlinedInput-root": {
-    color: "#fff",
-    "& fieldset": {
-      borderColor: "#000",
-    },
-    "&:hover fieldset": {
-      borderColor: "#fff",  
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#fff",
-    },
-    "& input[type=number]": {
-      "-moz-appearance": "textfield",
-    },
-    "& input[type=number]::-webkit-outer-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
-    },
-    "& input[type=number]::-webkit-inner-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
-    },
-  },
-});
+import { apiCheckLogin } from "../utilities/apiCall";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Profile() {
+  let [a, setA] = React.useState(null);
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!a) {
+      apiCheckLogin(setA);
+    }
+  }, []);
+  React.useEffect(() => {
+    if (a) {
+      if (a.err) {
+        navigate("/welcome");
+      }
+    }
+  }, [a]);
   return (
     <>
       <Theme>
@@ -86,34 +65,34 @@ export default function Profile() {
                 User Profile
               </Typography>
 
-              <Grid container justifyContent="center" spacing={1.5}>
-                <Grid item mobile={11} tablet={8.5} laptop={6}>
-                  <CssTextField
-                    id='outlined-read-only-input'
-                    defaultValue="Kunal Chturvedi"
-                    variant="outlined"
-                    fullWidth
-                    type={"text"}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item mobile={11} tablet={8.5} laptop={6}>
-                  <CssTextField
-                    id='outlined-read-only-input'
-                    defaultValue="7999250587"
-                    variant="outlined"
-                    fullWidth
-                    type={"number"}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-              </Grid>
-              
-              <div className="flex flex-col justify-center items-center mt-10">
+              <div className="flex flex-col justify-center items-center mt-20">
+                <Button disabled
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "custom.main",
+                    color: "custom.contrastText",
+                    width: { mobile: "90%", tablet: "40%", laptop: "40%" },
+                    height: { mobile: "60px", tablet: "50px", laptop: "50px" },
+                  }}
+                  type="submit"
+                >
+                  {a? a.user.Username : "kk"}
+                </Button>
+              </div>
+              <div className="flex flex-col justify-center items-center mt-5">
+                <Button disabled 
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "custom.main",
+                    color: "custom.contrastText",
+                    width: { mobile: "90%", tablet: "40%", laptop: "40%" },
+                    height: { mobile: "60px", tablet: "50px", laptop: "50px" },
+                  }}
+                >
+                  {a? a.user.Phone : "kk"}
+                </Button>
+              </div>
+              <div className="flex flex-col justify-center items-center mt-20">
                 <Button
                   variant="contained"
                   sx={{
