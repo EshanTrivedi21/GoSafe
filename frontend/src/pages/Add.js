@@ -1,9 +1,10 @@
 import { Button, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import { Link, useLocation } from "react-router-dom";
 import apiPost from "../utilities/apiCall";
+import { apiCheckLogin } from "../utilities/apiCall";
 import { Theme } from "../assets/theme";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const CssTextField = styled(TextField)({
   label: {
@@ -45,6 +46,20 @@ export default function Add() {
   let img = location.state || null;
   let [Problem, setProblem] = React.useState("");
   let [user, setUser] = React.useState(null);
+  let [a, setA] = React.useState(null);
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!a) {
+      apiCheckLogin(setA);
+    }
+  }, []);
+  React.useEffect(() => {
+    if (a) {
+      if (a.err) {
+        navigate("/welcome");
+      }
+    }
+  }, [a]);
   function handleSubmit(e) {
     e.preventDefault();
     navigator.geolocation.getCurrentPosition((position) => {
@@ -61,8 +76,12 @@ export default function Add() {
       data.append("lng", position.coords.longitude);
       apiPost("add/pothole", data, setUser);
     });
-    // });
   }
+  useEffect(() => {
+    if (user) {
+      if (!user.err) navigate("/");
+    }
+  }, [user]);
   return (
     <Theme>
       <svg

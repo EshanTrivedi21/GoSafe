@@ -1,46 +1,24 @@
 import React from 'react';
 import { Theme } from "../assets/theme.js";
 import { Grid, Box, Typography, TextField, Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
-
-const CssTextField = styled(TextField)({
-  label: {
-    color: "#fff",
-  },
-  "&.MuiTextField-root": {
-    backgroundColor: "#165C3F",
-  },
-
-  "& label.Mui-focused": {
-    color: "#fff",
-  },
-  "& .MuiOutlinedInput-root": {
-    color: "#fff",
-    "& fieldset": {
-      borderColor: "#000",
-    },
-    "&:hover fieldset": {
-      borderColor: "#fff",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#fff",
-    },
-    "& input[type=number]": {
-      "-moz-appearance": "textfield",
-    },
-    "& input[type=number]::-webkit-outer-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
-    },
-    "& input[type=number]::-webkit-inner-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
-    },
-  },
-});
+import { apiCheckLogin } from "../utilities/apiCall";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Profile() {
+  let [a, setA] = React.useState(null);
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!a) {
+      apiCheckLogin(setA);
+    }
+  }, []);
+  React.useEffect(() => {
+    if (a) {
+      if (a.err) {
+        navigate("/welcome");
+      }
+    }
+  }, [a]);
   return (
     <>
       <Theme>
@@ -99,7 +77,7 @@ export default function Profile() {
                   }}
                   type="submit"
                 >
-                  Kunal Chaturvedi
+                  {a? a.user.Username : "kk"}
                 </Button>
               </div>
               <div className="flex flex-col justify-center items-center mt-5">
@@ -111,9 +89,8 @@ export default function Profile() {
                     width: { mobile: "90%", tablet: "40%", laptop: "40%" },
                     height: { mobile: "60px", tablet: "50px", laptop: "50px" },
                   }}
-                  type="submit"
                 >
-                  7999250587
+                  {a? a.user.Phone : "kk"}
                 </Button>
               </div>
               <div className="flex flex-col justify-center items-center mt-20">

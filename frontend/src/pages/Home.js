@@ -240,7 +240,10 @@ export default function Home() {
         </div>
         <div ref={mapContainer} className="map-container w-full h-full" />
         <div className="absolute bottom-[8vh] bg-[#13724A] z-10 w-[95vw] h-[10vh] flex flex-col justify-center items-center rounded-lg  gap-3">
-          <div onClick={()=> navigate("/cam")} className="border-2 border-[#13724A] absolute -top-8 bg-white w-[70px] h-[70px] flex flex-col justify-center items-center rounded-full">
+          <div
+            onClick={() => navigate("/cam")}
+            className="border-2 border-[#13724A] absolute -top-8 bg-white w-[70px] h-[70px] flex flex-col justify-center items-center rounded-full"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="#13724A"
