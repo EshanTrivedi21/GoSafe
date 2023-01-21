@@ -1,8 +1,15 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Stack, Paper } from "@mui/material";
 import { Theme } from "../assets/theme.js";
+import History from "./History.js";
+import { styled } from "@mui/material/styles";
 
 const Report = () => {
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+    padding: theme.spacing(1.5),
+    color: theme.palette.text.secondary,
+  }));
   return (
     <>
       <Theme>
@@ -18,7 +25,7 @@ const Report = () => {
                   laptop: "secondary.main",
                 },
                 my: "50vh",
-                p: 5,
+                p: 2.5,
                 py: { mobile: 10, tablet: 3, laptop: 3 },
                 transform: "translateY(-50%)",
                 overflow: "hidden",
@@ -40,14 +47,27 @@ const Report = () => {
                 sx={{
                   fontWeight: "bold",
                   textAlign: "center",
-                  mt: { mobile: 0, tablet: 5, laptop: 5 },
-                  mb: 15,
+                  mt: { mobile: 5, tablet: 5, laptop: 5 },
+                  mb: 7.5,
                   textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
                   fontSize: "2.5rem",
                 }}
               >
                 Report History
               </Typography>
+              <h1 style={{
+                color: "white",
+                fontWeight: "bold",
+                textAlign: "left",
+                textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
+                fontSize: "1.5rem",
+                marginBottom: "1rem"
+              }}>January, 2023</h1>
+              <Stack spacing={2}>
+                <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
+                  <History image="homepage.svg" location="Thakur Village, Kandivali"/>
+                </Item>
+              </Stack>
             </Box>
           </Grid>
         </Grid>
