@@ -287,6 +287,7 @@ export default function Home() {
               width: "95vw",
               fontSize: "1rem",
             }}
+            onClick={() => navigate("/profile")}
           >
             My Profile
           </Button>
