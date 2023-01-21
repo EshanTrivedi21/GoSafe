@@ -57,7 +57,7 @@ export default function Profile() {
                   fontWeight: "bold",
                   textAlign: "center",
                   mt: { mobile: 0, tablet: 5, laptop: 5 },
-                  mb: 15,
+                  mb: 10,
                   textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
                   fontSize: "2.5rem",
                 }}
@@ -65,7 +65,7 @@ export default function Profile() {
                 User Profile
               </Typography>
 
-              <div className="flex flex-col justify-center items-center mt-20">
+              <div className="flex flex-col justify-center items-center mt-0">
                 <Button disabled
                   variant="contained"
                   sx={{
@@ -79,7 +79,7 @@ export default function Profile() {
                   {a? a.user.Username : "kk"}
                 </Button>
               </div>
-              <div className="flex flex-col justify-center items-center mt-5">
+              <div className="flex flex-col justify-center items-center mt-10">
                 <Button disabled 
                   variant="contained"
                   sx={{
@@ -106,7 +106,7 @@ export default function Profile() {
                   Rewards
                 </Button>
               </div>
-              <div className="flex flex-col justify-center items-center mt-3">
+              <div className="flex flex-col justify-center items-center mt-10">
                 <Button
                   variant="contained"
                   sx={{
@@ -120,36 +120,33 @@ export default function Profile() {
                   Report History
                 </Button>
               </div>  
-              <div className='flex flex-row justify-between  items-center '>
+              <div className='flex flex-row justify-between items-center'>
                 <Typography
                     variant="h5"
                     color="primary.contrastText"
                     to="/Welcome"
                     sx={{
                       fontStyle: "italic",
-                      fontSize: "0.65rem",
+                      fontSize: "1rem",
                       textAlign: "center",
                       textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
-                      mt: 1,
-                      textDecoration: "underline",
+                      margin: "auto",
+                      mt: 10,
+                      borderRadius: "10px",
+                      width: "50%",
+                      height: "50px",
+                      border: "1px solid white",
+                      fontWeight: "bold",
+                      textDecoration: "none",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      cursor: "pointer",
+
                     }}
                   >
-                    logout!
+                    Log Out
                   </Typography>
-                  <Typography
-                      variant="h5"
-                      color="primary.contrastText"
-                      sx={{
-                        fontStyle: "italic",
-                        fontSize: "0.65rem",
-                        textAlign: "center",
-                        textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
-                        mt: 1,
-                        textDecoration: "underline",
-                      }}
-                    >
-                      FAQs?
-                    </Typography>
                 </div>
             </Box>
           </Grid>
