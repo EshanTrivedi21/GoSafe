@@ -1,44 +1,55 @@
 import React from "react";
 import { Grid, Box, Typography, TextField, Button } from "@mui/material";
 import { Theme } from "../assets/theme.js";
-import { styled } from "@mui/material/styles";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import scratch1 from "../assets/scratch1.png";
+import scratch2 from "../assets/scratch2.png";
 
-const CssTextField = styled(TextField)({
-  label: {
-    color: "#fff",
-  },
-  "&.MuiTextField-root": {
-    backgroundColor: "#165C3F",
-  },
 
-  "& label.Mui-focused": {
-    color: "#fff",
-  },
-  "& .MuiOutlinedInput-root": {
-    color: "#fff",
-    "& fieldset": {
-      borderColor: "#000",
+const itemData = [
+    {
+      img: scratch1,
+      title: 'scratch-card',
     },
-    "&:hover fieldset": {
-      borderColor: "#fff",
+    {
+      img: scratch2,
+      title: 'scratch-card-2',
     },
-    "&.Mui-focused fieldset": {
-      borderColor: "#fff",
+    {
+      img: scratch1,
+      title: 'scratch-card',
     },
-    "& input[type=number]": {
-      "-moz-appearance": "textfield",
+    {
+      img: scratch2,
+      title: 'scratch-card-2',
     },
-    "& input[type=number]::-webkit-outer-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
+    {
+      img: scratch1,
+      title: 'scratch-card',
     },
-    "& input[type=number]::-webkit-inner-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
+    {
+      img: scratch2,
+      title: 'scratch-card-2',
     },
-  },
-});
-
+    {
+      img: scratch1,
+      title: 'scratch-card',
+    },
+    {
+      img: scratch2,
+      title: 'scratch-card-2',
+    },
+    {
+      img: scratch1,
+      title: 'scratch-card',
+    },
+    {
+      img: scratch2,
+      title: 'scratch-card-2',
+    },
+  ];
+  
 const Reward = () => {
   return (
     <>
@@ -83,13 +94,13 @@ const Reward = () => {
                   fontSize: "2.5rem",
                 }}
               >
-                Rewards 🎁
+                Rewards 
               </Typography>
               <Typography
                 variant="h6"
                 color="primary.contrastText"
                 sx={{
-                  fontSize: "1.5rem",
+                  fontSize: "0.8rem",
                   fontWeight: "light",
                   fontStyle: "italic",
                   textAlign: "center",
@@ -99,6 +110,21 @@ const Reward = () => {
               >
                 "If you work hard you should be rewarded"
               </Typography>
+
+              <Box sx={{ width: 300, height: 600, overflowY: "scroll" }}>
+                <ImageList variant="masonry" cols={2} gap={8}>
+                  {itemData.map((item) => (
+                    <ImageListItem key={item.img}>
+                      <img
+                        src={`${item.img}?w=248&fit=crop&auto=format`}
+                        srcSet={`${item.img}?w=248&fit=crop&auto=format`}
+                        alt={item.title}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </Box>
             </Box>
           </Grid>
         </Grid>
