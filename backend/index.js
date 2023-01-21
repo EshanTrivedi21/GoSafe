@@ -28,6 +28,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/auth/", auth);
 app.use("/api/add/", require(`./src/${version}/routes/add.route`));
+app.use("/api/get/", require(`./src/${version}/routes/get.route`));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://${url.server}`);

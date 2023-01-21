@@ -33,14 +33,14 @@ router.post("/pothole", authCheck, async (req, res, next) => {
           if (err) {
             return console.log(err);
           }
+          let user = await User.findById(req.user.user_id);
           const pothole = await Pothole.create({
             lat,
             lng,
             Image: "/usercontent/" + folder + Fileid + "." + fileExt,
             Problem,
-            by: req.user._id,
+            by: req.user.user_id,
           });
-          let user = await User.findById(req.user.user_id);
           user.reward += 10;
           user.save();
           res.status(200).json({ err: null });
