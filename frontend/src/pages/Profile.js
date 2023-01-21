@@ -25,7 +25,6 @@ export default function Profile() {
         <Grid container justifyContent="center">
           <Grid item mobile={12} tablet={8.5} laptop={5}>
             <Box
-              component="form"
               sx={{
                 width: "100%",
                 minHeight: { mobile: "100vh", tablet: "auto", laptop: "auto" },
@@ -58,7 +57,7 @@ export default function Profile() {
                   fontWeight: "bold",
                   textAlign: "center",
                   mt: { mobile: 0, tablet: 5, laptop: 5 },
-                  mb: 2,
+                  mb: 10,
                   textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
                   fontSize: "2.5rem",
                 }}
@@ -66,7 +65,7 @@ export default function Profile() {
                 User Profile
               </Typography>
 
-              <div className="flex flex-col justify-center items-center mt-20">
+              <div className="flex flex-col justify-center items-center mt-0">
                 <Button disabled
                   variant="contained"
                   sx={{
@@ -80,7 +79,7 @@ export default function Profile() {
                   {a? a.user.Username : "kk"}
                 </Button>
               </div>
-              <div className="flex flex-col justify-center items-center mt-5">
+              <div className="flex flex-col justify-center items-center mt-10">
                 <Button disabled 
                   variant="contained"
                   sx={{
@@ -100,27 +99,55 @@ export default function Profile() {
                     backgroundColor: "custom.main",
                     color: "custom.contrastText",
                     width: { mobile: "90%", tablet: "40%", laptop: "40%" },
-                    height: { mobile: "50px", tablet: "50px", laptop: "50px" },
+                    height: { mobile: "55px", tablet: "50px", laptop: "50px" },
                   }}
                   type="submit"
                 >
                   Rewards
                 </Button>
               </div>
-              <div className="flex flex-col justify-center items-center mt-5">
+              <div className="flex flex-col justify-center items-center mt-10">
                 <Button
                   variant="contained"
                   sx={{
                     backgroundColor: "custom.main",
                     color: "custom.contrastText",
                     width: { mobile: "90%", tablet: "40%", laptop: "40%" },
-                    height: { mobile: "50px", tablet: "50px", laptop: "50px" },
+                    height: { mobile: "55px", tablet: "50px", laptop: "50px" },
                   }}
                   type="submit" 
                 >
                   Report History
                 </Button>
               </div>  
+              <div className='flex flex-row justify-between items-center'>
+                <Typography
+                    variant="h5"
+                    color="primary.contrastText"
+                    to="/Welcome"
+                    sx={{
+                      fontStyle: "italic",
+                      fontSize: "1rem",
+                      textAlign: "center",
+                      textShadow: "0px 5px 4px rgba(0, 0, 0, 0.36)",
+                      margin: "auto",
+                      mt: 10,
+                      borderRadius: "10px",
+                      width: "50%",
+                      height: "50px",
+                      border: "1px solid white",
+                      fontWeight: "bold",
+                      textDecoration: "none",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      cursor: "pointer",
+
+                    }}
+                  >
+                    Log Out
+                  </Typography>
+                </div>
             </Box>
           </Grid>
         </Grid>
