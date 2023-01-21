@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "apexcharts": "^3.36.3",
     "axios": "^1.2.3",
+    "latlon-geohash": "^2.0.0",
     "localforage": "^1.10.0",
     "mapbox-gl": "^2.12.0",
     "match-sorter": "^6.3.1",

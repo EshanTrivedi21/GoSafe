@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
-import Map from "./Map.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Geohash from "latlon-geohash";
 import { TextField, Button, LinearProgress } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Theme } from "../assets/theme.js";
@@ -47,13 +47,71 @@ const CssTextField = styled(TextField)({
   },
 });
 
-// mapboxgl.accessToken ="pk.eyJ1IjoiZXNoYW50cml2ZWRpMjEiLCJhIjoiY2xjaXV6c2lqMTFzNjNvcXVmbzM0aGkwNyJ9.ZsRWT2z--97ajM58KQG4xQ";
+mapboxgl.accessToken =
+  "pk.eyJ1IjoiZXNoYW50cml2ZWRpMjEiLCJhIjoiY2xjaXV6c2lqMTFzNjNvcXVmbzM0aGkwNyJ9.ZsRWT2z--97ajM58KQG4xQ";
 
 export default function Home() {
-  const destination = { lng: 72.9106, lat: 20.3893 };
-
   const [progress, setProgress] = React.useState(0);
   const [color, setColor] = React.useState("");
+  const [text, setText] = useState("");
+
+  function search() {
+    fetch(
+      "https://api.unl.global/v2/geocode/forward?" +
+        new URLSearchParams({
+          query: text,
+          country: "IN",
+          limit: 10,
+        }),
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "x-unl-api-key": "Ddm47D4q7Iq7ci026pTvaMsIDpinlJNl",
+          "x-unl-vpm-id": "2d2639a7-b6d6-403a-b84c-95b63af2cae8",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          // let my = Geohash.encode(
+          //   position.coords.latitude,
+          //   position.coords.longitude,
+          //   9
+          // );
+          // let way = Geohash.encode(
+          //   response.features[0].geometry.coordinates[1],
+          //   response.features[0].geometry.coordinates[0],
+          //   9
+          // );
+          // console.log(my, way);
+          let a = `${position.coords.longitude},${position.coords.latitude};${response.features[0].geometry.coordinates[0]},${response.features[0].geometry.coordinates[1]}`
+          axios
+            .get(
+              `https://api.mapbox.com/directions/v5/mapbox/driving/${a}`,
+              {
+                params: {
+                  access_token: mapboxgl.accessToken,
+                  geometries: "geojson",
+                  steps: true,
+                  overview: "full",
+                  alternatives: true,
+                  exclude: "unpaved",
+                },
+                withCredentials: false,
+              }
+            )
+            .then((res) => {
+              console.log(res);
+              const geojson = res.data.routes[0].geometry;
+              addRoute(geojson);
+            })
+            .catch((err) => {});
+        });
+      });
+  }
 
   useEffect(() => {
     setProgress(Math.floor(Math.random() * (90 - 60 + 1) + 60));
@@ -69,7 +127,6 @@ export default function Home() {
   function clickHandler() {
     document.querySelector(".searchDiv").style.display = "none";
   }
-  const [text, setText] = useState("");
   React.useEffect(() => {
     if (text.length !== 0) {
       if (document.querySelector(".searchDiv").style.display === "none") {
@@ -78,6 +135,11 @@ export default function Home() {
     }
   }, [text]);
 
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [lng, setLng] = useState(72.8777);
+  const [lat, setLat] = useState(19.076);
+  const [zoom, setZoom] = useState(9);
   let [a, setA] = React.useState(null);
   const navigate = useNavigate();
   React.useEffect(() => {
@@ -92,6 +154,76 @@ export default function Home() {
       }
     }
   }, [a]);
+  function addRoute(coords) {
+    if (map.current.getSource("route")) {
+      map.current.removeLayer("route");
+      map.current.removeSource("route");
+    } else {
+      map.current.addLayer({
+        id: "route",
+        type: "line",
+        source: {
+          type: "geojson",
+          data: {
+            type: "Feature",
+            properties: {},
+            geometry: coords,
+          },
+        },
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "#03AA46",
+          "line-width": 8,
+          "line-opacity": 0.8,
+        },
+      });
+    }
+  }
+  useEffect(() => {
+    if (map.current) return;
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v12",
+      center: [lng, lat],
+      zoom: zoom,
+    });
+    navigator.geolocation.getCurrentPosition((position) => {
+      const el = document.createElement("div");
+      el.className = "marker";
+      console.log(position.coords.latitude, position.coords.longitude);
+      new mapboxgl.Marker(el)
+        .setLngLat([position.coords.longitude, position.coords.latitude])
+        .addTo(map.current);
+    });
+  }, []);
+  useEffect(() => {
+    if (!map.current) return;
+    map.current.on("load", () => {
+      axios
+        .get(
+          `https://api.mapbox.com/directions/v5/mapbox/driving/${72.884217},${19.150826};${72.829198},${19.106933}`,
+          {
+            params: {
+              access_token: mapboxgl.accessToken,
+              geometries: "geojson",
+              steps: true,
+              overview: "full",
+              alternatives: true,
+              exclude: "unpaved",
+            },
+            withCredentials: false,
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          const geojson = res.data.routes[0].geometry;
+          addRoute(geojson);
+        });
+    });
+  }, []);
 
   return (
     <Theme>
@@ -119,6 +251,9 @@ export default function Home() {
                 fullWidth
                 disabled
                 sx={{ width: "75vw", ml: 2 }}
+                onChange={(e) => {
+                  setText(e.target.value);
+                }}
               />
             </div>
             <div className="flex justify-center items-center">
@@ -159,13 +294,14 @@ export default function Home() {
                   width: "95vw",
                   fontSize: "1rem",
                 }}
+                onClick={search}
               >
                 Find Best Route
               </Button>
             </div>
           ) : null}
         </div>
-        <Map destination={destination}/>
+        <div ref={mapContainer} className="map-container w-full h-full" />
         <div className="absolute bottom-[8vh] bg-[#13724A] z-10 w-[95vw] h-[10vh] flex flex-col justify-center items-center rounded-lg  gap-3">
           <div
             onClick={() => navigate("/cam")}
@@ -214,6 +350,7 @@ export default function Home() {
               width: "95vw",
               fontSize: "1rem",
             }}
+            onClick={() => navigate("/profile")}
           >
             My Profile
           </Button>
@@ -222,4 +359,3 @@ export default function Home() {
     </Theme>
   );
 }
-// pk.eyJ1IjoiZXNoYW50cml2ZWRpMjEiLCJhIjoiY2xjaXV6c2lqMTFzNjNvcXVmbzM0aGkwNyJ9.ZsRWT2z--97ajM58KQG4xQ
