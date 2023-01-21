@@ -169,7 +169,7 @@ export default function LabTabs() {
               label="Incoming Reports"
               value="2"
               sx={{
-                width: "175px",
+                width: "200px",
                 margin: "0px 50px",
               }}
             />
@@ -177,7 +177,7 @@ export default function LabTabs() {
               label="Resolved Reports"
               value="3"
               sx={{
-                width: "175px",
+                width: "200px",
                 margin: "0px 50px",
               }}
             />
