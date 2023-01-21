@@ -46,30 +46,30 @@ router.post("/pothole", authCheck, async (req, res, next) => {
           res.status(200).json({ err: null });
         }
       );
-      // file.mv(
-      //   "./public/usercontent/" + folder + Fileid + "." + fileExt,
-      //    async (error) => {
-      //     if (error) {
-      //       return res.status(500).json({ err: error.message });
-      //     }
-      //     const pothole = await Pothole.create({
-      //         lat,
-      //         lng,
-      //         Image: "/usercontent/" + folder + Fileid + "." + fileExt,
-      //         Problem,
-      //         by: req.user._id,
-      //     })
-      //     let user = await User.findById(req.user.user_id)
-      //     user.reward += 10;
-      //     user.save();
-      //     res.status(200).json({ err: null });
-      //   }
-      // );
-      // var base64Data = file.replace(/^data:image\/png;base64,/, "");
     }
   } catch (err) {
     console.log(err);
     res.status(500).json({ err: err.message });
+  }
+});
+router.post("/update", authCheck, async (req, res, next) => {
+  if(req.user){
+    try{
+      const id = req.body.id;
+      const pothole = await Pothole.findOne({_id: id});
+      if(pothole){
+        if(pothole.assigned) pothole.assigned = false;
+        else pothole.assigned = true;
+        pothole.save();
+        res.status(200).json({err: null});
+      }
+      else{
+        res.status(400).json({err: "Pothole not found"});
+      }
+    }
+    catch (err){
+      res.status(500).json({err: err.message});
+    }
   }
 });
 module.exports = router;

@@ -2,10 +2,11 @@ import React from "react";
 import {
   Checkbox,
 } from "@mui/material";
+import url from "../url.json";
+import apiPost from "../utilities/apiCall";
 
 const Stat = (props) => {
-
-  console.log(`../assets/${props.image}`);
+  let setRefresh = props.setRefresh;
   return (
     <>
       <div className="flex flex-row justify-around items-center gap-5 ml-10">
@@ -19,9 +20,10 @@ const Stat = (props) => {
               color: "#fff",
             },
           }}
+          onClick={()=>{apiPost('add/update', {id: props.id}, setRefresh)}}
         />
         <img
-          src={require(`../assets/${props.image}`)}
+          src={`http://${url.server}/${props.image}`}
           alt=""
           style={{
             width: "70px",

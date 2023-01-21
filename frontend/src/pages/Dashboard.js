@@ -8,13 +8,12 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Popover from "@mui/material/Popover";
 import { styled } from "@mui/material/styles";
-import { apiCheckLogin } from "../utilities/apiCall";
+import apiPost, { apiCheckLogin } from "../utilities/apiCall";
 import { useNavigate } from "react-router-dom";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import Stat from "./Stat";
 import StatDone from "./StatDone";
-
 
 function getRandomCoordinates(currentLocation, radius) {
   const x0 = currentLocation[0];
@@ -55,6 +54,9 @@ export default function LabTabs() {
   const [lat, setLat] = useState(19.192562);
   const [zoom, setZoom] = useState(15);
   let [a, setA] = React.useState(null);
+  let [location, setLocation] = React.useState(null);
+  let [locationAs, setLocationAs] = React.useState(null);
+  let [locationUn, setLocationUn] = React.useState(null);
   const navigate = useNavigate();
   React.useEffect(() => {
     if (!a) {
@@ -76,7 +78,6 @@ export default function LabTabs() {
       center: [lng, lat],
       zoom: zoom,
     });
-
     navigator.geolocation.getCurrentPosition((position) => {
       const el = document.createElement("div");
       el.className = "marker";
@@ -114,13 +115,13 @@ export default function LabTabs() {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const id = open ? "simple-popover" : undefined;
 
   const StyledPopover = styled(Popover)({
-    backgroundColor: 'transparent',
-    '& .MuiPopover-paper': {
-      backgroundColor: '#13724A',
-      padding: '10px',
+    backgroundColor: "transparent",
+    "& .MuiPopover-paper": {
+      backgroundColor: "#13724A",
+      padding: "10px",
       borderRadius: "10px",
       display: "flex",
       gap: "25px",
@@ -128,9 +129,32 @@ export default function LabTabs() {
       alignItems: "center",
     },
   });
-
+  let [refresh, setRefresh] = React.useState(false);
+  useEffect(() => {
+    if (location) {
+      let c = location;
+      let a = c.potholes.filter((item) => {
+        if (!item.assigned) {
+          return item;
+        }
+      });
+      setLocationUn(a);
+      let b = location.potholes.filter((item) => {
+        if (item.assigned) {
+          return item;
+        }
+      });
+      setLocationAs(b);
+    }
+  }, [location]);
+  useEffect(() => {
+    apiPost("get/potholedata", {}, setLocation);
+  }, [refresh]);
   return (
-    <Box sx={{ width: "100%", typography: "body1", height: "100vh" }} className="!bg-[#fff]">
+    <Box
+      sx={{ width: "100%", typography: "body1", height: "100vh" }}
+      className="!bg-[#fff]"
+    >
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider", zIndex: 15 }}>
           <TabList
@@ -205,28 +229,69 @@ export default function LabTabs() {
               horizontal: "left",
             }}
           >
-            <h1 style={{
-              color: "#fff",
-              fontSize: "1.1rem",
-            }}>Thakur Village, Kandivali</h1>
-            <h3 style={{
-              color: "#fff",
-              fontSize: "0.8rem",
-            }}>by Eshan Trivedi</h3>
+            <h1
+              style={{
+                color: "#fff",
+                fontSize: "1.1rem",
+              }}
+            >
+              Thakur Village, Kandivali
+            </h1>
+            <h3
+              style={{
+                color: "#fff",
+                fontSize: "0.8rem",
+              }}
+            >
+              by Eshan Trivedi
+            </h3>
           </StyledPopover>
         </TabPanel>
         <TabPanel value="2">
           <Stack spacing={2}>
-            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
-              <Stat image="homepage.svg" location="Thakur Village, Kandivali" username="Eshan Trivedi" date="20/01/23"/>
-            </Item>
+            {locationUn ? (
+              locationUn.map((item) => (
+                <Item className="!bg-[#165C3F] !drop-shadow-xl !border" key={item._id}>
+                  <Stat
+                    image={item.Image}
+                    username={item.by.Username}
+                    key={item._id}
+                    id={item._id}
+                    setRefresh={setRefresh}
+                  />
+                </Item>
+              ))
+            ) : (
+              <h1>Loading...</h1>
+            )}
           </Stack>
         </TabPanel>
-        <TabPanel value="3"><Stack spacing={2}>
-            <Item className="!bg-[#165C3F] !drop-shadow-xl !border">
-              <StatDone image="homepage.svg" location="Thakur Village, Kandivali" username="Eshan Trivedi" date="20/01/23" resolvedDate="21/01/23"/>
-            </Item>
-          </Stack></TabPanel>
+        <TabPanel value="3">
+          <Stack spacing={2}>
+            {locationAs ? (
+              locationAs.map((item) => (
+                <Item className="!bg-[#165C3F] !drop-shadow-xl !border" key={item._id}>
+                  <StatDone
+                    image={item.Image}
+                    username={item.by.Username}
+                    
+                    id={item._id}
+                    setRefresh={setRefresh}
+                    resolvedDate="21/01/23"
+                  />
+                </Item>
+              ))
+            ) : (
+              <h1>Loading...</h1>
+            )}
+            {/* <StatDone
+                image="homepage.svg"
+                location="Thakur Village, Kandivali"
+                username="Eshan Trivedi"
+                date="20/01/23"
+              /> */}
+          </Stack>
+        </TabPanel>
       </TabContext>
     </Box>
   );
