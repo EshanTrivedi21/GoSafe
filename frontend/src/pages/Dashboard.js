@@ -258,6 +258,7 @@ export default function LabTabs() {
                     key={item._id}
                     id={item._id}
                     setRefresh={setRefresh}
+                    location={`${item.lng}, ${item.lat}`}
                   />
                 </Item>
               ))

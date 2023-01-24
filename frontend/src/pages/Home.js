@@ -104,13 +104,41 @@ export default function Home() {
             .then((res) => {
               setRouteData(res);
               const geojson = res.data.routes[0].geometry;
+              addRoute(geojson);
               addTrafficRoute(geojson);
             })
             .catch((err) => {});
         });
       });
   }
-
+  function addRoute(coords) {
+    if (map.current.getSource("route")) {
+      map.current.removeLayer("route");
+      map.current.removeSource("route");
+    } else {
+      map.current.addLayer({
+        id: "route",
+        type: "line",
+        source: {
+          type: "geojson",
+          data: {
+            type: "Feature",
+            properties: {},
+            geometry: coords,
+          },
+        },
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "#03AA46",
+          "line-width": 8,
+          "line-opacity": 0.8,
+        },
+      });
+    }
+  }
   useEffect(() => {
     setProgress(Math.floor(Math.random() * (90 - 60 + 1) + 60));
     if (progress >= 80) {
@@ -328,7 +356,7 @@ export default function Home() {
               <path d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 384c-53 0-96-43-96-96s43-96 96-96s96 43 96 96s-43 96-96 96z" />
             </svg>
           </div>
-          {/* {data ? ( */}
+          {routeData ? (
             <div className="flex justify-center items-center w-[95vw] gap-3 mt-5">
               <h2
                 style={{
@@ -354,7 +382,7 @@ export default function Home() {
                 }}
               />
             </div>
-          {/* ) : null} */}
+          ) : null}
         </div>
         <div className="absolute bottom-3 bg-[#13724A] z-10 w-[95vw] h-[5vh] flex flex-col justify-center items-center rounded-lg  gap-3">
           <Button
