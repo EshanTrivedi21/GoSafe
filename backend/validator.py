@@ -76,5 +76,6 @@ while (True):
         k = os.listdir()
         for a in l:
             output=mera_model(a)
+            print(output)
             a=a[0:-4]
             call(a,output)
